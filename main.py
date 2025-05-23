@@ -20,14 +20,15 @@ basic.forever(on_forever)
 
 motor_esquerda = robotbit.Motors.M1A
 motor_direita = robotbit.Motors.M1B
-max_speed = 255
-normal_speed = 170
+max_speed = 200
+normal_speed = 150
 
 def verificar():
-    leitor_esquerda = pins.digital_read_pin(AnalogPin.P1)
-    leitor_direita = pins.digital_read_pin(AnalogPin.P2)
+    leitor_esquerda = pins.digital_read_pin(DigitalPin.P1)
+    leitor_direita = pins.digital_read_pin(DigitalPin.P2)
 
-    #basic.show_string(str(leitor_esquerda) + "," + str(leitor_direita))
+    basic.clear_screen()
+    basic.show_string(str(leitor_esquerda) + str(leitor_direita))
 
     return leitor_esquerda, leitor_direita
 
@@ -41,21 +42,21 @@ def on_forever():
         #parar motor direito pra esteira ir p esquerda
         robotbit.motor_run(
             motor_direita,
-            -normal_speed/2
+            max_speed
         )
         robotbit.motor_run(
             motor_esquerda,
-            max_speed
+            0
         )
         
     if direita == 1:
         robotbit.motor_run(
             motor_esquerda,
-            -normal_speed/2
+            max_speed
         )
         robotbit.motor_run(
             motor_direita,
-            max_speed
+            0
         )
         
     if esquerda == 0 and direita == 0:
@@ -67,6 +68,16 @@ def on_forever():
             motor_esquerda,
             normal_speed
         )
-        
+'''
+    if esquerda == 1 and direita == 1:
+        robotbit.motor_run(
+            motor_direita,
+            -normal_speed
+        )
+        robotbit.motor_run(
+            motor_esquerda,
+            -normal_speed
+        )
+ '''       
 
 basic.forever(on_forever)
